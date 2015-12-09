@@ -1,19 +1,16 @@
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Random;
+
 
 /**
  * Created by bill on 12/4/15.
  */
 public class Room {
-    private static Random rnd = new Random();
-    private String roomName;
     private HashMap <String, Room> exits;
     private ArrayList<Player> playersInRoom;
 
     public Room(){
         exits = new HashMap<String, Room>();
-        roomName = generateRoomName();
         playersInRoom = new ArrayList(4);
     }
 
@@ -28,6 +25,24 @@ public class Room {
     }
 
     public ArrayList<Player> getPlayersInRoom(){ return playersInRoom;}
+
+
+//
+//    public void drawExits(){
+//        String directions = "nesw";
+//        for (char c : directions.toCharArray())
+//            if (getExit(Character.toString(c)) != null)
+//                drawExit(c);
+//    }
+//
+//    private void drawExit(char exit){
+//        switch (exit){
+//            case 'n': northExit.makeVisible();
+//                break;
+//            case 'e': drawEastExit.makeVisible();
+//                break;
+//        }
+//    }
 
     public Room getExit(String direction){
         switch (direction.charAt(0)){
@@ -57,12 +72,4 @@ public class Room {
     }
 
     public void setExit(String direction, Room room){ exits.put(direction, room);}
-
-    private String generateRoomName(){
-        StringBuilder s = new StringBuilder();
-
-        for (int i = 0; i < rnd.nextInt(5) + 3; i++)    /** Name will be 3 - 8 characters long */
-            s.append(rnd.nextInt(25) + 65);             /** ASCII codes for a - z */
-        return s.toString();
-    }
 }

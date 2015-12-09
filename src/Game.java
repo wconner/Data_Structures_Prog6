@@ -52,6 +52,7 @@ public class Game {
         if(currentRoom.getExit(direction) != null){
             currentRoom.getExit(direction).addPlayer(playerInFocus);
             currentRoom.removePlayer(playerInFocus);
+            playerInFocus.setInRoom(currentRoom.getExit(direction));
         }
         else
             System.out.println("Error, no door in that direction");
@@ -81,12 +82,12 @@ public class Game {
 
     private void initPlayers(){
         for (int i = 0; i < numPlayers; i++) {
-            players.add(new Player());
+            players.add(new Player(rooms.get(i)));
             rooms.get(i).addPlayer(players.get(i));
         }
     }
 
-    private void initRooms(){
+    private void initRooms(){                       /** Right now the map is just a box */
         for (int i = 0; i < 4; i ++)
             rooms.add(new Room());
 
@@ -101,6 +102,13 @@ public class Game {
 
         rooms.get(3).setExit("north", rooms.get(2));
         rooms.get(3).setExit("west", rooms.get(0));
+    }
+
+    public void listPlayersInRoom(){
+        for (Room r : rooms){
+            System.out.println("Room: " + r.toString());
+            System.out.println("Players in room: " + r.getPlayersInRoom());
+        }
     }
 
 
