@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Random;
 import java.util.Scanner;
 
 /**
@@ -11,41 +10,47 @@ public class Game {
     private ArrayList<Room> rooms;
     private Player playerInFocus;
     private Room currentRoom;
-    private boolean exit = false;
-    private Random rnd;
-    private String[] directions = {"north", "east", "south", "west"};
+    private int[] diceRoll = {0,0};
+    private Program6_GUI GUI;
 
     public Game(int numPlayers){
         this.numPlayers = numPlayers;
-        players = new ArrayList<Player>(4);
+        players = new ArrayList<Player>();
         rooms = new ArrayList<Room>();
-        rnd = new Random();
 
         initRooms();
         initPlayers();
+        playerInFocus = players.get(0);
+        currentRoom = findRoom(playerInFocus);
+        GUI = new Program6_GUI(this, currentRoom);
 
         playerInFocus = players.get(0);
 
-        while(!exit)
-            runLoop();
+        runLoop();
     }
 
     private void runLoop(){
         currentRoom = findRoom(playerInFocus);
+        System.out.println("It is " + playerInFocus.name + " turn.");
         if (currentRoom.getPlayersInRoom().size() == 1) {        /** Nobody else in room */
             System.out.println("Nobody else in the room");
-            move(directions[rnd.nextInt(4)]);
         }
-            else{                                                   /** Multiple people in the room */
-                System.out.println("Somebody else in the room");
-            }
-        playerInFocus = nextPlayerTurn();
+        else {                                                   /** Multiple people in the room */
+            System.out.println("Somebody else in the room");
+            collision();
+        }
+        if (players.size() == 1)
+            gameWon();
+    }
 
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+    private void collision(){
+        for (int i = 0; i < 2; i++)
+            diceRoll[i] = currentRoom.getPlayersInRoom().get(i).rollDice();
+        if (diceRoll[0] > diceRoll[1]) {                      /** Removes first person in room */
+            players.remove(currentRoom.getPlayersInRoom().get(0));
         }
+        else                                                /** Removes second person in room */
+            players.remove(currentRoom.getPlayersInRoom().get(1));
     }
 
     public void move(String direction){
@@ -53,15 +58,19 @@ public class Game {
             currentRoom.getExit(direction).addPlayer(playerInFocus);
             currentRoom.removePlayer(playerInFocus);
             playerInFocus.setInRoom(currentRoom.getExit(direction));
+            playerInFocus = nextPlayerTurn();
+            runLoop();
         }
         else
             System.out.println("Error, no door in that direction");
     }
 
+    public Player getPlayerInFocus(){ return playerInFocus;}
+
     private Player nextPlayerTurn(){
         for (int i = 0; i < players.size(); i++){
             if (players.get(i) == playerInFocus){
-                for (int j = i; j < players.size(); j++)
+                for (int j = i + 1; j < players.size(); j++)
                     if (players.get(j) != null)
                         return players.get(j);
                 for (int k = 0; k < i; k++)
@@ -93,6 +102,7 @@ public class Game {
 
         rooms.get(0).setExit("north", rooms.get(1));
         rooms.get(0).setExit("east", rooms.get(3));
+        rooms.get(0).setExit("west", rooms.get(2));
 
         rooms.get(1).setExit("south", rooms.get(0));
         rooms.get(1).setExit("east", rooms.get(2));
@@ -102,6 +112,10 @@ public class Game {
 
         rooms.get(3).setExit("north", rooms.get(2));
         rooms.get(3).setExit("west", rooms.get(0));
+    }
+
+    private void gameWon(){
+        System.out.println("Game over!\nThe winner is: " + players.iterator().next().name);
     }
 
     public void listPlayersInRoom(){

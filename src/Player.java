@@ -36,6 +36,10 @@ public class Player {
         return hash;
     }
 
+    public int rollDice(){
+        return rnd.nextInt();
+    }
+
     public Room getInRoom(){ return  inRoom;}
     public void setInRoom(Room room){ inRoom = room;}
 }
