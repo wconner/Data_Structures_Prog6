@@ -27,7 +27,7 @@ public class ButtonPanel extends JPanel {
         grid.insets = new Insets(5,5,5,5);
 
         //Create label for player turn and add to panel
-        playerTurnLabel = new JLabel("Player " + game.getPlayerInFocus().name + "'s turn.");
+        playerTurnLabel = new JLabel(game.getPlayerInFocus().getName() + "'s turn.");
         grid.gridx = 2;
         grid.gridy = 1;
         add(playerTurnLabel, grid);

@@ -6,15 +6,16 @@ import java.util.Random;
 
 public class Player {
     private static Random rnd = new Random();
-    String name;
-    Room inRoom;
+    private String name, hashName;
+    private Room inRoom;
 
-    public Player(Room room){
+    public Player(Room room, String name){
+        this.name = name;
         inRoom = room;
-        name = generatePlayerName();
+        hashName = generateHashName();
     }
 
-    private String generatePlayerName(){
+    private String generateHashName(){
         StringBuilder s = new StringBuilder();
 
         for (int i = 0; i < 3; i++)    /** Name will be 3 characters long */
@@ -24,7 +25,7 @@ public class Player {
 
     public int hashCode(){
         int hash = 0;
-        char[] nameC = name.toCharArray();
+        char[] nameC = hashName.toCharArray();
 
         for (int i = 0; i < nameC.length; i++){
             if (nameC[i] % 2 == 0)
@@ -42,4 +43,5 @@ public class Player {
 
     public Room getInRoom(){ return  inRoom;}
     public void setInRoom(Room room){ inRoom = room;}
+    public String getName(){ return name;}
 }

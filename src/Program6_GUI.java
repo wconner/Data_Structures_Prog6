@@ -46,4 +46,11 @@ public class Program6_GUI extends JFrame {
         //Make the window visible
         setVisible(true);
     }
+
+    public void setGAME_PANEL (Room currentRoom){
+        GAME_PANEL.removeAll();
+        GAME_PANEL = new GamePanel(currentRoom);
+        GAME_PANEL.repaint();
+        repaint();
+    }
 }

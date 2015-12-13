@@ -26,24 +26,6 @@ public class Room {
 
     public ArrayList<Player> getPlayersInRoom(){ return playersInRoom;}
 
-
-//
-//    public void drawExits(){
-//        String directions = "nesw";
-//        for (char c : directions.toCharArray())
-//            if (getExit(Character.toString(c)) != null)
-//                drawExit(c);
-//    }
-//
-//    private void drawExit(char exit){
-//        switch (exit){
-//            case 'n': northExit.makeVisible();
-//                break;
-//            case 'e': drawEastExit.makeVisible();
-//                break;
-//        }
-//    }
-
     public Room getExit(String direction){
         switch (direction.charAt(0)){
             case 'n':

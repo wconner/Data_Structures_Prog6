@@ -14,13 +14,14 @@ public class GamePanel extends JPanel {
     static String directions = "nesw";
 
     ArrayList<DrawRooms> doors;
+    ArrayList<DrawPlayers> players;
     DrawRooms walls;
-    DrawPlayers player_1, player_2;
     Room currentRoom;
 
     public GamePanel(Room currentRoom) {
         this.currentRoom = currentRoom;
-        doors = new ArrayList();
+        doors = new ArrayList<DrawRooms>();
+        players = new ArrayList<DrawPlayers>();
         buildPanel();
         setVisible(true);
     }
@@ -28,12 +29,21 @@ public class GamePanel extends JPanel {
 
     public void buildPanel() {
         walls = new DrawRooms(75, 50, 650, 500);
-        player_1 = new DrawPlayers();
+        drawPlayers();
         doors.clear();
         for (char c : directions.toCharArray())
             if (currentRoom.getExit(Character.toString(c)) != null)
                 drawExit(c);
 }
+
+    private void drawPlayers(){
+        int c = 0;
+        for (Player p : currentRoom.getPlayersInRoom()){
+            players.add(new DrawPlayers(c, p));
+            c++;
+        }
+    }
+
     private void drawExit(char exit){
         switch (exit){
             case 'n':  doors.add(new DrawRooms(340,50,80,20));
@@ -55,6 +65,7 @@ public class GamePanel extends JPanel {
         walls.draw(g2d);
         for (DrawRooms d : doors)
             d.draw(g2d);
-        player_1.draw(g2d);
+        for (DrawPlayers p : players)
+            p.draw(g2d);
     }
 }

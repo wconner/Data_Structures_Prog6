@@ -12,9 +12,10 @@ public class Game {
     private Room currentRoom;
     private int[] diceRoll = {0,0};
     private Program6_GUI GUI;
+    private Scanner scanner;
 
-    public Game(int numPlayers){
-        this.numPlayers = numPlayers;
+    public Game(){
+        scanner = new Scanner(System.in);
         players = new ArrayList<Player>();
         rooms = new ArrayList<Room>();
 
@@ -23,7 +24,6 @@ public class Game {
         playerInFocus = players.get(0);
         currentRoom = findRoom(playerInFocus);
         GUI = new Program6_GUI(this, currentRoom);
-
         playerInFocus = players.get(0);
 
         runLoop();
@@ -31,7 +31,7 @@ public class Game {
 
     private void runLoop(){
         currentRoom = findRoom(playerInFocus);
-        System.out.println("It is " + playerInFocus.name + " turn.");
+        System.out.println("It is " + playerInFocus.getName() + " turn.");
         if (currentRoom.getPlayersInRoom().size() == 1) {        /** Nobody else in room */
             System.out.println("Nobody else in the room");
         }
@@ -60,6 +60,7 @@ public class Game {
             playerInFocus.setInRoom(currentRoom.getExit(direction));
             playerInFocus = nextPlayerTurn();
             runLoop();
+            GUI.setGAME_PANEL(currentRoom);
         }
         else
             System.out.println("Error, no door in that direction");
@@ -90,9 +91,12 @@ public class Game {
     }
 
     private void initPlayers(){
-        for (int i = 0; i < numPlayers; i++) {
-            players.add(new Player(rooms.get(i)));
-            rooms.get(i).addPlayer(players.get(i));
+        System.out.println("How many people are playing?");
+        numPlayers = scanner.nextInt();
+            for (int i = 0; i < numPlayers; i++){
+                System.out.println("Enter player " + i + "'s name: ");
+                players.add(new Player(rooms.get(i), scanner.next()));
+                rooms.get(i).addPlayer(players.get(i));
         }
     }
 
@@ -115,7 +119,7 @@ public class Game {
     }
 
     private void gameWon(){
-        System.out.println("Game over!\nThe winner is: " + players.iterator().next().name);
+        System.out.println("Game over!\nThe winner is: " + players.iterator().next().getName());
     }
 
     public void listPlayersInRoom(){
@@ -136,9 +140,6 @@ public class Game {
 
 
     public static void main(String argc[]){
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.println("Enter the number of players: ");
-        new Game(scanner.nextInt());
+        new Game();
     }
 }
