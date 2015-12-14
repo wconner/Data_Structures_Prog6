@@ -1,9 +1,9 @@
 /**
  * Created by Jacob on 12/8/15.
  */
-import java.awt.*;
-import java.awt.image.ImageObserver;
-import java.text.AttributedCharacterIterator;
+
+import java.awt.BorderLayout;
+
 import javax.swing.JFrame;
 
 public class Program6_GUI extends JFrame {
@@ -54,5 +54,6 @@ public class Program6_GUI extends JFrame {
         add(GAME_PANEL, BorderLayout.CENTER);
         BUTTON_PANEL.updateLabel();
         GAME_PANEL.paintComponent(getGraphics());
+
     }
 }

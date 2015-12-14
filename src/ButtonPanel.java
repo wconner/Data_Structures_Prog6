@@ -59,8 +59,11 @@ public class ButtonPanel extends JPanel {
         south.addActionListener(new DirectionListener());
     }
 
+<<<<<<< HEAD
     public void updateLabel(){ playerTurnLabel.setText(game.getPlayerInFocus().getName() + "'s turn.");}
 
+=======
+>>>>>>> b27c08984ba912239aa319a0c81793576ba54c40
     class DirectionListener implements ActionListener{
         public void actionPerformed(ActionEvent event){
             if (event.paramString().contains("North"))
