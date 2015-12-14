@@ -1,9 +1,7 @@
 /**
  * Created by Jacob on 12/8/15.
  */
-
 import java.awt.BorderLayout;
-
 import javax.swing.JFrame;
 
 public class Program6_GUI extends JFrame {
@@ -25,7 +23,6 @@ public class Program6_GUI extends JFrame {
         this.currentRoom = currentRoom;
 
         //Set the Layout of the Frame
-        setLayout(new BorderLayout());
         setLayout(new BorderLayout());
         LOGO_PANEL = new LogoPanel();
         GAME_PANEL = new GamePanel(currentRoom);
@@ -49,11 +46,13 @@ public class Program6_GUI extends JFrame {
         setVisible(true);
     }
 
+    /*
+    setGAME_PANEL method that redraws the room after every turn
+     */
     public void setGAME_PANEL (Room r){
         GAME_PANEL = new GamePanel(r);
         add(GAME_PANEL, BorderLayout.CENTER);
         BUTTON_PANEL.updateLabel();
         GAME_PANEL.paintComponent(getGraphics());
-
     }
 }

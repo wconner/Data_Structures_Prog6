@@ -40,6 +40,8 @@ public class Game {
             System.out.println("Somebody else in the room");
             collision();
         }
+        if (players.size() == 1)
+            gameWon();
     }
 
     private void collision(){
@@ -62,13 +64,12 @@ public class Game {
             GUI.setGAME_PANEL(currentRoom);
             if (diceRoll[0] != 0){
                 JOptionPane.showMessageDialog(null, currentRoom.getPlayersInRoom().get(0).getName() + " rolled a " + diceRoll[0] +
-                        "\n" + currentRoom.getPlayersInRoom().get(1).getName() +" rolled a " + diceRoll[1]);
+                        "\n" + currentRoom.getPlayersInRoom().get(1).getName() +" rolled a " + diceRoll[1],"Game Over",JOptionPane.INFORMATION_MESSAGE);
                 diceRoll[0] = 0;
             }
-            if (players.size() == 1)
-                gameWon();
         }
         else
+            JOptionPane.showMessageDialog(null, "There's no door in that direction","No Door Error",JOptionPane.INFORMATION_MESSAGE);
             System.out.println("Error, no door in that direction");
     }
 
@@ -112,7 +113,6 @@ public class Game {
 
         rooms.get(0).setExit("north", rooms.get(1));
         rooms.get(0).setExit("east", rooms.get(3));
-        rooms.get(0).setExit("west", rooms.get(2));
 
         rooms.get(1).setExit("south", rooms.get(0));
         rooms.get(1).setExit("east", rooms.get(2));
@@ -125,7 +125,7 @@ public class Game {
     }
 
     private void gameWon(){
-        JOptionPane.showMessageDialog(null, "Game over!\nThe winner is: " + players.iterator().next().getName());
+        System.out.println("Game over!\nThe winner is: " + players.iterator().next().getName());
     }
 
     public void listPlayersInRoom(){
@@ -134,16 +134,6 @@ public class Game {
             System.out.println("Players in room: " + r.getPlayersInRoom());
         }
     }
-
-
-
-
-
-
-
-
-
-
 
     public static void main(String argc[]){
         new Game();

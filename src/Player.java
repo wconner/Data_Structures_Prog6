@@ -38,7 +38,7 @@ public class Player {
     }
 
     public int rollDice(){
-        return rnd.nextInt(100) + 1;
+        return rnd.nextInt(100);
     }
 
     public Room getInRoom(){ return  inRoom;}

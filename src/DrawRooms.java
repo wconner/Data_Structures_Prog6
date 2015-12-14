@@ -7,6 +7,7 @@ public class DrawRooms{
 
     int x,y,width,height;
 
+    //no-arg constructor
     public DrawRooms() {
         x = 0;
         y = 0;
@@ -24,28 +25,6 @@ public class DrawRooms{
     public void draw(Graphics2D g2d) {
         g2d.drawRect(x, y, width, height);
     }
-
-
-    //sets x coordinate
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    //sets y coordinate
-    public void setY(int y) {
-        this.y = y;
-    }
-
-    //sets width
-    public void setWidth(int w) {
-        this.width = w;
-    }
-
-    //sets height
-    public void setHeight(int h) {
-        this.height = h;
-    }
-
     //gets x
     public int getX() {
         return x;

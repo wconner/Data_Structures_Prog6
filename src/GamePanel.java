@@ -35,7 +35,9 @@ public class GamePanel extends JPanel {
             if (currentRoom.getExit(Character.toString(c)) != null)
                 drawExit(c);
 }
-
+    /*
+    drawPlayer method draws each player in their room
+     */
     private void drawPlayers(){
         int c = 0;
         for (Player p : currentRoom.getPlayersInRoom()){
@@ -43,7 +45,9 @@ public class GamePanel extends JPanel {
             c++;
         }
     }
-
+    /*
+    drawExit method to draw the exits to each room
+     */
     private void drawExit(char exit){
         switch (exit){
             case 'n':  doors.add(new DrawRooms(340,50,80,20));
@@ -59,6 +63,9 @@ public class GamePanel extends JPanel {
 
     }
 
+    /*
+    paintComponent to draw the rooms and doors
+     */
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
