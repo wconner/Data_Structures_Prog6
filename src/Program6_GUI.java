@@ -50,7 +50,6 @@ public class Program6_GUI extends JFrame {
     }
 
     public void setGAME_PANEL (Room r){
-        GAME_PANEL.getGraphics().clearRect(GAME_PANEL.getX(), GAME_PANEL.getY(), GAME_PANEL.getWidth(), GAME_PANEL.getHeight());
         GAME_PANEL = new GamePanel(r);
         add(GAME_PANEL, BorderLayout.CENTER);
         BUTTON_PANEL.updateLabel();
