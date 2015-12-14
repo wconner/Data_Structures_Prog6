@@ -4,6 +4,8 @@ import java.util.Scanner;
 
 /**
  * Created by bill on 12/4/15.
+ * This is the main game class, determines the state of the game, which player and room is the focus, whos turn it is,
+ * and if there's a collision between two players.
  */
 public class Game {
     private int numPlayers;
@@ -27,6 +29,10 @@ public class Game {
         GUI = new Program6_GUI(this, currentRoom);
         playerInFocus = players.get(0);
 
+        JOptionPane.showMessageDialog(null, "Welcome to dice roll game, navigate the maze to try to find your opponents.\n" +
+                        "when you find an opponent, the game will roll a dice to determine who wins.\n" +
+                "The person alive wins!");
+
         runLoop();
     }
 
@@ -42,6 +48,9 @@ public class Game {
         }
     }
 
+    /**
+     * When two players meet in the same room.
+     */
     private void collision(){
         for (int i = 0; i < 2; i++)
             diceRoll[i] = currentRoom.getPlayersInRoom().get(i).rollDice();
@@ -52,6 +61,10 @@ public class Game {
             players.remove(currentRoom.getPlayersInRoom().get(1));
     }
 
+    /**
+     * Attempts to move the current player to the desired room.
+     * @param direction Direction of the room the player is trying to move to.
+     */
     public void move(String direction){
         if(currentRoom.getExit(direction) != null){
             currentRoom.getExit(direction).addPlayer(playerInFocus);
@@ -75,6 +88,10 @@ public class Game {
 
     public Player getPlayerInFocus(){ return playerInFocus;}
 
+    /**
+     * Returns the player who's turn is next.
+     * @return player who's turn is next
+     */
     private Player nextPlayerTurn(){
         for (int i = 0; i < players.size(); i++){
             if (players.get(i) == playerInFocus){
@@ -97,6 +114,9 @@ public class Game {
         return null;
     }
 
+    /**
+     * Creates players up to the number of rooms in the game.
+     */
     private void initPlayers() {
         System.out.println("How many people are playing?");
         numPlayers = scanner.nextInt();
@@ -107,21 +127,30 @@ public class Game {
         }
     }
 
-    private void initRooms(){                       /** Right now the map is just a box */
-        for (int i = 0; i < 4; i ++)
+    /**
+     * Create rooms and sets their exits.
+     */
+    private void initRooms(){                       /** Right now the map is just a box with a basement */
+        for (int i = 0; i < 6; i ++)
             rooms.add(new Room());
 
-        rooms.get(0).setExit("north", rooms.get(1));
+        rooms.get(0).setExit("north", rooms.get(1));    /** Bottom left */
         rooms.get(0).setExit("east", rooms.get(3));
 
-        rooms.get(1).setExit("south", rooms.get(0));
+        rooms.get(1).setExit("south", rooms.get(0));    /** Top left */
         rooms.get(1).setExit("east", rooms.get(2));
 
-        rooms.get(2).setExit("south", rooms.get(3));
+        rooms.get(2).setExit("south", rooms.get(3));    /** Top right */
         rooms.get(2).setExit("west", rooms.get(1));
 
-        rooms.get(3).setExit("north", rooms.get(2));
+        rooms.get(3).setExit("north", rooms.get(2));    /** Bottom Right */
         rooms.get(3).setExit("west", rooms.get(0));
+        rooms.get(3).setExit("south", rooms.get(4));
+
+        rooms.get(4).setExit("north", rooms.get(5));    /** Basement South */
+
+        rooms.get(5).setExit("south", rooms.get(4));    /** Basement North */
+        rooms.get(5).setExit("north", rooms.get(1));
     }
 
     private void gameWon(){
