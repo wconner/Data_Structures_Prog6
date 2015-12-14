@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -39,8 +40,6 @@ public class Game {
             System.out.println("Somebody else in the room");
             collision();
         }
-        if (players.size() == 1)
-            gameWon();
     }
 
     private void collision(){
@@ -61,6 +60,13 @@ public class Game {
             playerInFocus = nextPlayerTurn();
             runLoop();
             GUI.setGAME_PANEL(currentRoom);
+            if (diceRoll[0] != 0){
+                JOptionPane.showMessageDialog(null, currentRoom.getPlayersInRoom().get(0).getName() + " rolled a " + diceRoll[0] +
+                        "\n" + currentRoom.getPlayersInRoom().get(1).getName() +" rolled a " + diceRoll[1]);
+                diceRoll[0] = 0;
+            }
+            if (players.size() == 1)
+                gameWon();
         }
         else
             System.out.println("Error, no door in that direction");
@@ -119,7 +125,7 @@ public class Game {
     }
 
     private void gameWon(){
-        System.out.println("Game over!\nThe winner is: " + players.iterator().next().getName());
+        JOptionPane.showMessageDialog(null, "Game over!\nThe winner is: " + players.iterator().next().getName());
     }
 
     public void listPlayersInRoom(){

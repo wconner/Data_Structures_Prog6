@@ -1,7 +1,9 @@
 /**
  * Created by Jacob on 12/8/15.
  */
-import java.awt.BorderLayout;
+import java.awt.*;
+import java.awt.image.ImageObserver;
+import java.text.AttributedCharacterIterator;
 import javax.swing.JFrame;
 
 public class Program6_GUI extends JFrame {
@@ -47,10 +49,11 @@ public class Program6_GUI extends JFrame {
         setVisible(true);
     }
 
-    public void setGAME_PANEL (Room currentRoom){
-        GAME_PANEL.removeAll();
-        GAME_PANEL = new GamePanel(currentRoom);
-        GAME_PANEL.repaint();
-        repaint();
+    public void setGAME_PANEL (Room r){
+        GAME_PANEL.getGraphics().clearRect(GAME_PANEL.getX(), GAME_PANEL.getY(), GAME_PANEL.getWidth(), GAME_PANEL.getHeight());
+        GAME_PANEL = new GamePanel(r);
+        add(GAME_PANEL, BorderLayout.CENTER);
+        BUTTON_PANEL.updateLabel();
+        GAME_PANEL.paintComponent(getGraphics());
     }
 }
