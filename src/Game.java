@@ -40,8 +40,6 @@ public class Game {
             System.out.println("Somebody else in the room");
             collision();
         }
-        if (players.size() == 1)
-            gameWon();
     }
 
     private void collision(){
@@ -67,6 +65,8 @@ public class Game {
                         "\n" + currentRoom.getPlayersInRoom().get(1).getName() +" rolled a " + diceRoll[1],"Game Over",JOptionPane.INFORMATION_MESSAGE);
                 diceRoll[0] = 0;
             }
+            if (players.size() == 1)
+                gameWon();
         }
         else
             JOptionPane.showMessageDialog(null, "There's no door in that direction","No Door Error",JOptionPane.INFORMATION_MESSAGE);
@@ -97,7 +97,7 @@ public class Game {
         return null;
     }
 
-    private void initPlayers(){
+    private void initPlayers() {
         System.out.println("How many people are playing?");
         numPlayers = scanner.nextInt();
             for (int i = 0; i < numPlayers; i++){
@@ -125,8 +125,7 @@ public class Game {
     }
 
     private void gameWon(){
-        System.out.println("Game over!\nThe winner is: " + players.iterator().next().getName());
-    }
+        JOptionPane.showMessageDialog(null, "Game over!\nThe winner is: " + players.iterator().next().getName());}
 
     public void listPlayersInRoom(){
         for (Room r : rooms){
